@@ -4,20 +4,21 @@
 
 
 //Initializing 4 char sets for future user confirms
-const lowerCase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-const upperCase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-const special = ["!", "@", "#", "$", "%", "^", "&", "*", "?"];
+const lowerCase = "abcdefghijklmnopqrstuvwxyz"
+const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const numbers = "1234567890"
+const special = "!@#$%^&*()"
 
 //Init passLength to hold password length
 let passLength
-//Initial charSet with no value
-//Will push values to array if user confirm boolean = true
-let charSet = []
+
+//Init charSet to hold character set determined by user confirms
 
 //Init pass which will hold the final password
 let pass = ""
 
+//Init Charset that user will choose with confirms
+let charSet = ""
 
 //Init user confirms
 let confirmLower
@@ -26,44 +27,60 @@ let confirmNumbers
 let confirmSepcial
 
 
-
-
 //If user input = true, add it to charSet
 function generatePassword() {
-  
-  passLength = prompt("How many characters do you want your password to be? (Must be between 8 and 128)")
+ 
+  //Take user prompt and convert to integer
+  passLength = parseInt(prompt("How many characters do you want your password to be? (Must be between 8 and 128)"))
 
-  if (passLength > 8 || passLength < 128) {
+  //Make sure the condition only runs if the user inputs a length between 8 and 128
+  //If passLength is less than 8 and greater than 128, alert user to try again, restart function
+  if (passLength < 8 || passLength > 128){
+    alert("Please enter a number between 8 and 128")
+    generatePassword()
+  }
+  //If a user enters something that is not a number, alert user to try again, restart function
+  else if(isNaN(passLength)) {
+    alert("Please enter a number")
+    generatePassword()
+  }
+  else if(passLength > 8 || passLength < 128) {
+
+  //User confirms
 
     confirmLower = confirm("Do you want lowercase letters?")
     confirmUpper = confirm("Do you want uppercase letters?")
     confirmNumbers = confirm("Do you want numbers?")
     confirmSpecial = confirm("Do you want special characters?")
-    
-  if (charLower === true) {
-    charSet.push(lowerCase)
+  
+  //If user confirm = true, add to charSet
+  if (confirmLower) {
+    charSet += lowerCase
   }
-  if (charUpper === true) {
-    charSet.push(upperCase)
+  if (confirmUpper) {
+    charSet += upperCase
   }
-  if (charNum === true) {
-    charSet.push(numberChar)
+  if (confirmNumbers) {
+    charSet += numbers
   }
-  if (charSpec === true) {
-    charSet.push(specialChar)
+  if (confirmSpecial) {
+    charSet += special
   }
+  //If a user selects nothing
   else {
-    
-    
-}
+    alert("Please select a character type")
+    generatePassword()
+  }
 
+  //Loop until passLength is reached, pass(final password) takes charset (as determined by user) and randomizes to the length of the charset
+  for(let i = 0; i < passLength; i++) {
+    pass += charSet.charAt(Math.floor(Math.random() * charSet.length))
+  }
+  //returns the final password
+  return pass
+  }
+  //
 }
-else {
-  alert("Please enter a number between 8 and 128")
-  generatePassword()
-}
-}
-
 
 
 
