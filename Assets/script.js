@@ -14,11 +14,7 @@ let passLength
 
 //Init charSet to hold character set determined by user confirms
 
-//Init pass which will hold the final password
-let pass = ""
 
-//Init Charset that user will choose with confirms
-let charSet = ""
 
 //Init user confirms
 let confirmLower
@@ -29,22 +25,20 @@ let confirmSepcial
 
 //If user input = true, add it to charSet
 function generatePassword() {
- 
+  let pass = ""
+  let charSet = ""
   //Take user prompt and convert to integer
   passLength = parseInt(prompt("How many characters do you want your password to be? (Must be between 8 and 128)"))
 
   //Make sure the condition only runs if the user inputs a length between 8 and 128
   //If passLength is less than 8 and greater than 128, alert user to try again, restart function
-  if (passLength < 8 || passLength > 128){
+  while ((passLength < 8 || passLength > 128)||(isNaN(passLength))){
     alert("Please enter a number between 8 and 128")
-    generatePassword()
+    passLength = parseInt(prompt("How many characters do you want your password to be? (Must be between 8 and 128)"))
   }
   //If a user enters something that is not a number, alert user to try again, restart function
-  else if(isNaN(passLength)) {
-    alert("Please enter a number")
-    generatePassword()
-  }
-  else if(passLength > 8 || passLength < 128) {
+  
+{
 
   //User confirms
 
